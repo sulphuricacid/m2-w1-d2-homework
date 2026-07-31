@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Activities at the Cliffs</title>
+
+<link rel="stylesheet" href="style.css">
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+<script>
+  $(document).ready(function() {
+    $("td").click(function () { //user select a table data cell
+      var content = $(this).text(); //get content of cell
+
+      if (content != "Not Available") { //check if content does not contain a particular string
+        $(this).toggleClass("tdhighlight"); //add or remove class when cell is selected
+
+        //bonus: figure out which cliff site column this cell belongs to
+        var colIndex = $(this).index();
+        var site = $('thead tr th').eq(colIndex).text();
+
+        if ($(this).hasClass("tdhighlight")) { //check if selected cell has class
+          $('#displaySelected').css("visibility","visible"); //make display box visible
+          $('#displaySelected').css("margin-top","2em"); //add spaces above display box
+          $('#result').append("<p>" + content + " <span class='cliffsite'>at " + site + "</span></p>"); //add child element with contents of cell
+
+        } else { //if selected cell don't have class
+          $('#result p:contains("' + content + '")').remove(); //remove child element
+
+          if ($('#result').has('p').length == false) { //check if there are any child elements within parent
+            $('#displaySelected').css("visibility","hidden"); //make display box hidden
+            $('#displaySelected').css("margin-top","0"); //remove spaces above display box
+          }
+        }
+      }
+    });
+  });
+</script>
+</head>
+<body id="activities">
+
+<main>
+
+  <table>
+    <caption>Activities at the Cliffs</caption>
+    <thead>
+      <tr>
+        <th>Activity</th>
+        <th>West Cliff</th>
+        <th>North Cliff</th>
+        <th>East Cliff</th>
+        <th>South Cliff</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <th>Hiking</th>
+        <td>College Hikes</td>
+        <td>Family Fun</td>
+        <td>Treasure Trails</td>
+        <td>Canyon Explorer</td>
+      </tr>
+      <tr>
+        <th>Kayak</th>
+        <td>Western Kayak Meetup</td>
+        <td>Not Available</td>
+        <td>Youth Kayaking</td>
+        <td>Kayak Down</td>
+      </tr>
+      <tr>
+        <th>Skydiving</th>
+        <td>Seacliff Diving</td>
+        <td>Sky is the limit</td>
+        <td>Not Available</td>
+        <td>Sky Diving for Beginners</td>
+      </tr>
+      <tr>
+        <th>Biking</th>
+        <td>Bicycle for One</td>
+        <td>Not Available</td>
+        <td>Bike Meetup Group</td>
+        <td>Not Available</td>
+      </tr>
+      <tr>
+        <th>Camping</th>
+        <td>Youth Camp</td>
+        <td>Rent a Tent</td>
+        <td>Campground Adventure</td>
+        <td>Sunset Camping</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div id="displaySelected">
+    <div id="result">
+      <h4>My selected activities to enquire:</h4>
+    </div>
+    <div id="sendinfo">
+      <input type="email" placeholder="johndoe@gmail.com">
+      <button>Get Info</button>
+    </div>
+  </div>
+
+</main>
+
+</body>
+</html>
